@@ -1,0 +1,49 @@
+<?php
+// Vérifie si des salles sont passées en paramètre
+if (isset($salles) && count($salles) > 0) {
+    echo "<h1>Liste des salles</h1>";
+    echo "<table border='1'>
+            <tr>
+                <th>Nom de la salle</th>
+                <th>Capacité</th>
+                <th>Ecole</th>
+                <th>Actions</th>
+            </tr>";
+
+    // Parcourt chaque salle et l'affiche dans un tableau
+    foreach ($salles as $salle) {
+        echo "<tr>
+                <td>{$salle['nom']}</td>
+                <td>{$salle['capacite']}</td>
+                <td>{$salle['ecole']}</td>
+                <td>
+                    <a href='/salle/show/{$salle['id']}'>Détails</a> |
+                    <a href='/salle/update/{$salle['id']}'>Modifier</a> |
+                    <a href='/salle/delete/{$salle['id']}'>Supprimer</a>
+                </td>
+              </tr>";
+    }
+
+    echo "</table>";
+} else {
+    echo "<p>Aucune salle trouvée.</p>";
+}
+
+// Formulaire de création d'une salle
+echo "<h2>Créer une nouvelle salle</h2>";
+echo "<form method='POST' action='/salle/create'>
+        <label for='nom'>Nom de la salle :</label><br>
+        <input type='text' id='nom' name='nom' required><br><br>
+        <label for='capacite'>Capacité :</label><br>
+        <input type='number' id='capacite' name='capacite' required><br><br>
+        <label for='id_ecole'>Ecole :</label><br>
+        <select id='id_ecole' name='id_ecole'>";
+        // Lister les écoles dans un select
+        foreach ($ecoles as $ecole) {
+            echo "<option value='{$ecole['id']}'>{$ecole['nom']}</option>";
+        }
+echo "</select><br><br>";
+
+echo "<input type='submit' value='Ajouter la salle'>
+      </form>";
+?>

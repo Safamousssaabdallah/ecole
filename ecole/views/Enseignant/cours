@@ -1,0 +1,55 @@
+<?php
+// Vérifie si des cours sont passés en paramètre
+if (isset($cours) && count($cours) > 0) {
+    echo "<h1>Liste des cours</h1>";
+    echo "<table border='1'>
+            <tr>
+                <th>Nom du cours</th>
+                <th>Enseignant</th>
+                <th>Ecole</th>
+                <th>Actions</th>
+            </tr>";
+
+    // Parcourt chaque cours et l'affiche dans un tableau
+    foreach ($cours as $coursItem) {
+        echo "<tr>
+                <td>{$coursItem['nom']}</td>
+                <td>{$coursItem['enseignant']}</td>
+                <td>{$coursItem['ecole']}</td>
+                <td>
+                    <a href='/cours/show/{$coursItem['id']}'>Détails</a> |
+                    <a href='/cours/update/{$coursItem['id']}'>Modifier</a> |
+                    <a href='/cours/delete/{$coursItem['id']}'>Supprimer</a>
+                </td>
+              </tr>";
+    }
+
+    echo "</table>";
+} else {
+    echo "<p>Aucun cours trouvé.</p>";
+}
+
+// Formulaire de création d'un cours
+echo "<h2>Créer un nouveau cours</h2>";
+echo "<form method='POST' action='/cours/create'>
+        <label for='nom'>Nom du cours :</label><br>
+        <input type='text' id='nom' name='nom' required><br><br>
+        <label for='id_enseignant'>Enseignant :</label><br>
+        <select id='id_enseignant' name='id_enseignant'>";
+        // Lister les enseignants dans un select
+        foreach ($enseignants as $enseignant) {
+            echo "<option value='{$enseignant['id']}'>{$enseignant['nom']} {$enseignant['prenom']}</option>";
+        }
+echo "</select><br><br>";
+
+echo "<label for='id_ecole'>Ecole :</label><br>
+        <select id='id_ecole' name='id_ecole'>";
+        // Lister les écoles dans un select
+        foreach ($ecoles as $ecole) {
+            echo "<option value='{$ecole['id']}'>{$ecole['nom']}</option>";
+        }
+echo "</select><br><br>";
+
+echo "<input type='submit' value='Ajouter le cours'>
+      </form>";
+?>
